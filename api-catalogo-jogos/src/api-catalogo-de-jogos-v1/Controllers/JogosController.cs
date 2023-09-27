@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using api_catalogo_de_jogos.InputModel;
+using api_catalogo_de_jogos.Services;
+using System.ComponentModel.DataAnnotations;
+using api_catalogo_de_jogos.ViewModel;
 
 namespace api_catalogo_de_jogos.Controllers
 {
@@ -8,26 +11,51 @@ namespace api_catalogo_de_jogos.Controllers
     public class JogosController : ControllerBase
     {
 
-        [HttpGet]
-        public async Task<ActionResult<List<object>>> GetAllJogos()
+        private readonly IJogoService _jogoService;
+
+        public JogosController(IJogoService jogoService)
         {
-            return Ok();
+            _jogoService = jogoService;
+        }
+        
+        [HttpGet]
+        public async Task<ActionResult<List<object>>> GetAllJogos([FromQuery, Range(1,int.MaxValue)] int pagina = 1, [FromQuery, Range(1,50)] int  quantidade = 5)
+        {
+            var jogos = await _jogoService.GetAllJogos(1,5);
+            if (jogos.Count() < 1)
+            {
+                return NoContent();
+            }
+            return Ok(jogos);
         }
 
         /*---------------------------------------------------------------*/
         [HttpGet("{JogoId:guid}")]
-        public async Task<ActionResult<object>> GetJogoByID(Guid idJogo)
+        public async Task<ActionResult<object>> GetJogoByID([FromRoute]Guid idJogo)
         {
-            return Ok();
+            var result = await _jogoService.GetJogoByID(idJogo);
+            if (result == null)
+            {
+                return NoContent();
+            }
+            return Ok(result);
         }
        
        
        
         /*---------------------------------------------------------------*/
         [HttpPost]
-        public async Task<ActionResult<object>> CriarNovoJogo(JogoInputModel jogo)
+        public async Task<ActionResult<object>> CriarNovoJogo([FromBody] JogoInputModel jogo)
         {
-            return Ok();
+            try
+            {
+                var result = await _jogoService.CriarNovoJogo(jogo);
+                return Ok(result);
+            }
+            catch (System.Exception)
+            {
+               return UnprocessableEntity("Falhou aí heim, talvez esteja repetido..." );
+            }
         }
 
         
@@ -35,17 +63,31 @@ namespace api_catalogo_de_jogos.Controllers
         
         /*---------------------------------------------------------------*/
         [HttpPut("{JogoId:guid")]
-        public async Task<ActionResult<object>> AtualizarJogo(Guid id , JogoInputModel jogo)
+        public async Task<ActionResult<JogoViewModel>> AtualizarJogo([FromRoute] Guid id , [FromBody] JogoInputModel jogo)
         {
-            return Ok();
+             try
+            {
+                return await _jogoService.AtualizarJogo(id, jogo);
+            }
+            catch (System.Exception)
+            {
+               return UnprocessableEntity("Falhou aí heim, talvez esteja repetido..." );
+            }
         }
         
         
         /*---------------------------------------------------------------*/
         [HttpPatch("{JogoId:guid}/preco/{preco:double}")]
-        public async Task<ActionResult<object>> ChangeItemJogo(Guid idJogo, double preco)
+        public async Task<ActionResult<JogoViewModel>> AtualizarItemJogo([FromRoute] Guid id , [FromBody] double preco)
         {
-            return Ok();
+             try
+            {
+                return await _jogoService.AtualizarItemJogo(id, preco);
+            }
+            catch (System.Exception)
+            {
+               return UnprocessableEntity("Falhou aí heim, talvez esteja repetido..." );
+            }
         }
 
         
@@ -53,11 +95,20 @@ namespace api_catalogo_de_jogos.Controllers
         
        /*---------------------------------------------------------------*/
         
-       /* [HttpDelete("{JogoId:guid}")]
-        public async Task<AcceptedResult> DeleteJogo(Guid id)
+        [HttpDelete("{JogoId:guid}")]
+        public async Task<ActionResult> DeleteJogo( [FromRoute] Guid id)
         {
-            return Ok();
+           try
+           {
+             await _jogoService.DeleteJogo(id);
+             return Ok();
+           }
+           catch(Exception)
+           {
+               return UnprocessableEntity("Jogo não existe" );
+
+           }
         }
-        */
+       
     }
 }
