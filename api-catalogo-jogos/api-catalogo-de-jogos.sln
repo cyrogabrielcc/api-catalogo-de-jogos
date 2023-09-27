@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "api-catalogo-de-jogos", "src\api-catalogo-de-jogos-v1\api-catalogo-de-jogos.csproj", "{91147726-DEBC-4834-80AA-283C729FCE38}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "api-catalogo-de-jogos", "src\api-catalogo-de-jogos.csproj", "{91147726-DEBC-4834-80AA-283C729FCE38}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
