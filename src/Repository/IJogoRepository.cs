@@ -6,9 +6,9 @@ namespace api_catalogo_de_jogos.Repository
 {
     public interface IJogoRepository
     {
-        Task<List<JogoViewModel>> Obter(int pagina, int quantidade);
-        Task<JogoViewModel> Obter(Guid id);
-        Task<JogoViewModel> Inserir(JogoInputModel jogo);
+        Task<List<Jogo>> Obter(int pagina, int quantidade);
+        Task<Jogo> Obter(Guid id);
+        Task<Jogo> Inserir(JogoInputModel jogo);
         Task Atualizar(Guid id, JogoInputModel jogo);
         Task Atualizar(Guid id, double preco);
         Task Remover(Guid id);
