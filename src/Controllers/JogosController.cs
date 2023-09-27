@@ -19,9 +19,9 @@ namespace api_catalogo_de_jogos.Controllers
         }
         
         [HttpGet]
-        public async Task<ActionResult<List<object>>> GetAllJogos([FromQuery, Range(1,int.MaxValue)] int pagina = 1, [FromQuery, Range(1,50)] int  quantidade = 5)
+        public async Task<ActionResult<List<object>>> Obter([FromQuery, Range(1,int.MaxValue)] int pagina = 1, [FromQuery, Range(1,50)] int  quantidade = 5)
         {
-            var jogos = await _jogoService.GetAllJogos(1,5);
+            var jogos = await _jogoService.Obter(1,5);
             if (jogos.Count() < 1)
             {
                 return NoContent();
@@ -31,9 +31,9 @@ namespace api_catalogo_de_jogos.Controllers
 
         /*---------------------------------------------------------------*/
         [HttpGet("{JogoId:guid}")]
-        public async Task<ActionResult<object>> GetJogoByID([FromRoute]Guid idJogo)
+        public async Task<ActionResult<object>> Obter([FromRoute]Guid idJogo)
         {
-            var result = await _jogoService.GetJogoByID(idJogo);
+            var result = await _jogoService.Obter(idJogo);
             if (result == null)
             {
                 return NoContent();
@@ -45,11 +45,11 @@ namespace api_catalogo_de_jogos.Controllers
        
         /*---------------------------------------------------------------*/
         [HttpPost]
-        public async Task<ActionResult<object>> CriarNovoJogo([FromBody] JogoInputModel jogo)
+        public async Task<ActionResult<object>> InserirJogo ([FromBody] JogoInputModel jogo)
         {
             try
             {
-                var result = await _jogoService.CriarNovoJogo(jogo);
+                var result = await _jogoService.Inserir(jogo);
                 return Ok(result);
             }
             catch (System.Exception)
@@ -67,7 +67,7 @@ namespace api_catalogo_de_jogos.Controllers
         {
              try
             {
-                 await _jogoService.AtualizarJogo(id, jogo);
+                 await _jogoService.Atualizar(id, jogo);
 
                  return Ok();
             }
@@ -80,11 +80,11 @@ namespace api_catalogo_de_jogos.Controllers
         
         /*---------------------------------------------------------------*/
         [HttpPatch("{JogoId:guid}/preco/{preco:double}")]
-        public async Task<ActionResult<JogoViewModel>> AtualizarItemJogo([FromRoute] Guid id , [FromBody] double preco)
+        public async Task<ActionResult<JogoViewModel>> AtualizarJogo([FromRoute] Guid id , [FromBody] double preco)
         {
              try
             {
-                 await _jogoService.AtualizarItemJogo(id, preco);
+                 await _jogoService.Atualizar(id, preco);
                  return Ok();
             }
             catch (System.Exception)
@@ -99,11 +99,11 @@ namespace api_catalogo_de_jogos.Controllers
        /*---------------------------------------------------------------*/
         
         [HttpDelete("{JogoId:guid}")]
-        public async Task<ActionResult> DeleteJogo( [FromRoute] Guid id)
+        public async Task<ActionResult> ApagarJogo( [FromRoute] Guid id)
         {
            try
            {
-             await _jogoService.DeleteJogo(id);
+             await _jogoService.Remover(id);
              return Ok();
            }
            catch(Exception)

@@ -5,11 +5,11 @@ namespace api_catalogo_de_jogos.Services
 {
     public interface IJogoService : IDisposable
     {
-        Task<List<JogoViewModel>> GetAllJogos (int pagina, int quantidade);
-        Task<JogoViewModel> GetJogoByID(Guid id);
-        Task<JogoViewModel> CriarNovoJogo(JogoInputModel jogo);
-        Task AtualizarJogo(Guid id, JogoInputModel jogo);
-        Task AtualizarItemJogo(Guid id , double preco);
-        Task DeleteJogo(Guid id);
+        Task<List<JogoViewModel>> Obter(int pagina, int quantidade);
+        Task<JogoViewModel> Obter(Guid id);
+        Task<JogoViewModel> Inserir(JogoInputModel jogo);
+        Task Atualizar(Guid id, JogoInputModel jogo);
+        Task Atualizar(Guid id, double preco);
+        Task Remover(Guid id);
     }
 }

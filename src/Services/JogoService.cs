@@ -2,29 +2,24 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using api_catalogo_de_jogos.Entities;
 using api_catalogo_de_jogos.InputModel;
+using api_catalogo_de_jogos.Repository;
 using api_catalogo_de_jogos.ViewModel;
 
 namespace api_catalogo_de_jogos.Services
 {
     public class JogoService : IJogoService
     {
-        Task IJogoService.AtualizarItemJogo(Guid id, double preco)
+        // Declarando o repository
+        private readonly IJogoRepository _jogoRepository;
+
+        Task IJogoService.Atualizar(Guid id, JogoInputModel jogo)
         {
             throw new NotImplementedException();
         }
 
-        Task IJogoService.AtualizarJogo(Guid id, JogoInputModel jogo)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<JogoViewModel> IJogoService.CriarNovoJogo(JogoInputModel jogo)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task IJogoService.DeleteJogo(Guid id)
+        Task IJogoService.Atualizar(Guid id, double preco)
         {
             throw new NotImplementedException();
         }
@@ -34,12 +29,22 @@ namespace api_catalogo_de_jogos.Services
             throw new NotImplementedException();
         }
 
-        Task<List<JogoViewModel>> IJogoService.GetAllJogos(int pagina, int quantidade)
+        Task<JogoViewModel> IJogoService.Inserir(JogoInputModel jogo)
         {
             throw new NotImplementedException();
         }
 
-        Task<JogoViewModel> IJogoService.GetJogoByID(Guid id)
+        Task<List<JogoViewModel>> IJogoService.Obter(int pagina, int quantidade)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<JogoViewModel> IJogoService.Obter(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task IJogoService.Remover(Guid id)
         {
             throw new NotImplementedException();
         }
