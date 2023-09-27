@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using api_catalogo_de_jogos.InputModel;
 
 namespace api_catalogo_de_jogos.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     public class JogosController : ControllerBase
     {
 
@@ -29,7 +30,7 @@ namespace api_catalogo_de_jogos.Controllers
        
         /*---------------------------------------------------------------*/
         [HttpPost]
-        public async Task<ActionResult<object>> CreateNewJogo()
+        public async Task<ActionResult<object>> CriarNovoJogo(JogoInputModel jogo)
         {
             return Ok();
         }
@@ -39,7 +40,7 @@ namespace api_catalogo_de_jogos.Controllers
         
         /*---------------------------------------------------------------*/
         [HttpPut("{JogoId:guid")]
-        public async Task<ActionResult<object>> ChangeJogo(Guid idJogo)
+        public async Task<ActionResult<object>> AtualizarJogo(Guid id , JogoInputModel jogo)
         {
             return Ok();
         }
@@ -47,7 +48,7 @@ namespace api_catalogo_de_jogos.Controllers
         
         /*---------------------------------------------------------------*/
         [HttpPatch("{JogoId:guid}/preco/{preco:double}")]
-        public async Task<ActionResult<object>> ChangeItemJogo(Guid idJogo, double jogo)
+        public async Task<ActionResult<object>> ChangeItemJogo(Guid idJogo, double preco)
         {
             return Ok();
         }
