@@ -67,11 +67,13 @@ namespace api_catalogo_de_jogos.Controllers
         {
              try
             {
-                return await _jogoService.AtualizarJogo(id, jogo);
+                 await _jogoService.AtualizarJogo(id, jogo);
+
+                 return Ok();
             }
             catch (System.Exception)
             {
-               return UnprocessableEntity("Falhou aí heim, talvez esteja repetido..." );
+               return NotFound("O Jogo não pôde ser alterado" );
             }
         }
         
@@ -82,7 +84,8 @@ namespace api_catalogo_de_jogos.Controllers
         {
              try
             {
-                return await _jogoService.AtualizarItemJogo(id, preco);
+                 await _jogoService.AtualizarItemJogo(id, preco);
+                 return Ok();
             }
             catch (System.Exception)
             {

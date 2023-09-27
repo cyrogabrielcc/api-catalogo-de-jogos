@@ -3,7 +3,7 @@ using api_catalogo_de_jogos.ViewModel;
 
 namespace api_catalogo_de_jogos.Services
 {
-    public interface IJogoService
+    public interface IJogoService : IDisposable
     {
         Task<List<JogoViewModel>> GetAllJogos (int pagina, int quantidade);
         Task<JogoViewModel> GetJogoByID(Guid id);
