@@ -9,10 +9,56 @@ using api_catalogo_de_jogos.ViewModel;
 
 namespace api_catalogo_de_jogos.Services
 {
-    public class JogoService : IJogoService
+    class JogoService : IJogoService
     {
-        // Declarando o repository
+
+
+        // ----------------------- Declarando o repository
         private readonly IJogoRepository _jogoRepository;
+
+
+
+        // ----------------------- Criando o construtor
+        JogoService(IJogoRepository jogoRepository)
+        {
+            _jogoRepository = jogoRepository;
+        }
+
+
+
+        // ----------------------- Obtendo todos
+         async Task<List<JogoViewModel>> IJogoService.Obter(int pagina, int quantidade)
+        {
+            var jogos = await _jogoRepository.Obter(pagina, quantidade);
+            var results = jogos.Select(jogo => new JogoViewModel {
+                Id = jogo.Id, 
+                Nome = jogo.Nome,
+                Produtora = jogo.Produtora,
+                Preco = jogo.Preco
+            }).ToList();
+
+            return results;
+        }
+
+
+
+
+        // ----------------------- Obtendo um pelo id
+        async Task<JogoViewModel> IJogoService.Obter(Guid id)
+        {
+            var jogo = await _jogoRepository.Obter(id);
+            if (jogo is null)  return null;
+            
+            var result = new JogoViewModel
+            {
+              Id = jogo.Id,
+              Nome = jogo.Nome,
+              Produtora = jogo.Produtora,
+              Preco = jogo.Preco  
+            };
+            return result;
+            
+        }
 
         Task IJogoService.Atualizar(Guid id, JogoInputModel jogo)
         {
@@ -24,22 +70,7 @@ namespace api_catalogo_de_jogos.Services
             throw new NotImplementedException();
         }
 
-        void IDisposable.Dispose()
-        {
-            throw new NotImplementedException();
-        }
-
         Task<JogoViewModel> IJogoService.Inserir(JogoInputModel jogo)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<List<JogoViewModel>> IJogoService.Obter(int pagina, int quantidade)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<JogoViewModel> IJogoService.Obter(Guid id)
         {
             throw new NotImplementedException();
         }
