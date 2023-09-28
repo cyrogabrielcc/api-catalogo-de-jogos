@@ -112,14 +112,34 @@ namespace api_catalogo_de_jogos.Services
 
         
         
-        Task IJogoService.Atualizar(Guid id, double preco)
+        // ----------------------- ATUALIZANDO UM JOGO VIA PATCH
+        async Task IJogoService.Atualizar(Guid id, double preco)
         {
-            throw new NotImplementedException();
-        }
+            var entidadeJogo = await _jogoRepository.Obter(id);
+            
+            if (entidadeJogo is null) throw new JogoNaoCadastradoException();
 
-        Task IJogoService.Remover(Guid id)
-        {
-            throw new NotImplementedException();
+            await _jogoRepository.Atualizar(entidadeJogo);
         }
+        // ----------------------- ATUALIZANDO UM JOGO VIA PATCH
+
+
+
+
+       // ----------------------- DELETANDO UM JOGO
+async Task IJogoService.Remover(Guid id)
+        {
+            var jogo = await _jogoRepository.Obter(id);
+
+            if(jogo is null) throw new JogoNaoCadastradoException();
+
+            await _jogoRepository.Remover(id);
+        }
+       // ----------------------- DELETANDO UM JOGO
+   
+   
+   
+   
+   
     }
 }
