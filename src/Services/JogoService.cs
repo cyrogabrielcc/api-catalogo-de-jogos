@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using api_catalogo_de_jogos.Entities;
 using api_catalogo_de_jogos.Exceptions;
 using api_catalogo_de_jogos.InputModel;
@@ -16,7 +12,7 @@ namespace api_catalogo_de_jogos.Services
 
         // ----------------------- Declarando o repository
         private readonly IJogoRepository _jogoRepository;
-
+        // ----------------------- Declarando o repository
 
 
         // ----------------------- Criando o construtor
@@ -24,6 +20,7 @@ namespace api_catalogo_de_jogos.Services
         {
             _jogoRepository = jogoRepository;
         }
+        // ----------------------- Criando o construtor
 
 
 
@@ -40,6 +37,7 @@ namespace api_catalogo_de_jogos.Services
 
             return results;
         }
+        // ----------------------- Obtendo todos
 
 
 
@@ -60,6 +58,7 @@ namespace api_catalogo_de_jogos.Services
             return result;
             
         }
+        // ----------------------- Obtendo um pelo id
 
         
         
@@ -91,13 +90,28 @@ namespace api_catalogo_de_jogos.Services
 
         
         }
+        // ----------------------- INSERINDO UM JOGO
 
-
-        Task IJogoService.Atualizar(Guid id, JogoInputModel jogo)
+        
+        
+        // ----------------------- ATUALIZANDO UM JOGO
+        async Task IJogoService.Atualizar(Guid id, JogoInputModel jogo)
         {
-            throw new NotImplementedException();
-        }
+            var entidadeJogo = await _jogoRepository.Obter(id);
 
+            if (entidadeJogo is null) throw new JogoNaoCadastradoException(); 
+
+            entidadeJogo.Nome = jogo.Nome;
+            entidadeJogo.Produtora = jogo.Produtora;
+            entidadeJogo.Preco = jogo.Preco;
+
+            await _jogoRepository.Atualizar(entidadeJogo);
+
+        }
+        // ----------------------- ATUALIZANDO UM JOGO
+
+        
+        
         Task IJogoService.Atualizar(Guid id, double preco)
         {
             throw new NotImplementedException();
