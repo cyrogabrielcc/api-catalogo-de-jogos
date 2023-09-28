@@ -6,11 +6,11 @@ namespace api_catalogo_de_jogos.Repository
 {
     public interface IJogoRepository
     {
-        public Task<List<Jogo>> Obter(int pagina, int quantidade);
-        public Task<Jogo> Obter(Guid id);
-        public Task<Jogo> Inserir(JogoInputModel jogo);
-        public Task Atualizar(Guid id, JogoInputModel jogo);
-        public Task Atualizar(Guid id, double preco);
-        public Task Remover(Guid id);
+        Task<List<Jogo>> Obter(int pagina, int quantidade);
+        Task<Jogo> Obter(Guid id);
+        Task<List<Jogo>> Obter(string nome, string produtora);
+        Task Inserir(Jogo jogo);
+        Task Atualizar(Jogo jogo);
+        Task Remover(Guid id);
     }
 }

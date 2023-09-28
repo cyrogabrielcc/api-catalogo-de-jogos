@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api_catalogo_de_jogos.Entities;
+using api_catalogo_de_jogos.Exceptions;
 using api_catalogo_de_jogos.InputModel;
 using api_catalogo_de_jogos.Repository;
 using api_catalogo_de_jogos.ViewModel;
@@ -19,7 +20,7 @@ namespace api_catalogo_de_jogos.Services
 
 
         // ----------------------- Criando o construtor
-        JogoService(IJogoRepository jogoRepository)
+        public JogoService(IJogoRepository jogoRepository)
         {
             _jogoRepository = jogoRepository;
         }
@@ -60,17 +61,44 @@ namespace api_catalogo_de_jogos.Services
             
         }
 
+        
+        
+        
+        // ----------------------- INSERINDO UM JOGO
+        async Task<JogoViewModel> IJogoService.Inserir(JogoInputModel jogo)
+        {
+            var jogoEntidade = await _jogoRepository.Obter(jogo.Nome, jogo.Produtora);
+
+            if (jogoEntidade.Count > 0) throw new JogoJaCadastradoException();
+            
+            var jogoInsert = new Jogo
+            {
+                Id = Guid.NewGuid(),
+                Nome = jogo.Nome,
+                Produtora = jogo.Produtora,
+                Preco = jogo.Preco
+            };
+
+            await _jogoRepository.Inserir(jogoInsert);
+
+            return new JogoViewModel
+            {
+                Id = jogoInsert.Id,
+                Nome = jogo.Nome,
+                Produtora = jogo.Produtora,
+                Preco = jogo.Preco
+            };
+
+        
+        }
+
+
         Task IJogoService.Atualizar(Guid id, JogoInputModel jogo)
         {
             throw new NotImplementedException();
         }
 
         Task IJogoService.Atualizar(Guid id, double preco)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<JogoViewModel> IJogoService.Inserir(JogoInputModel jogo)
         {
             throw new NotImplementedException();
         }
